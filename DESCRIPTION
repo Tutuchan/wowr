@@ -1,0 +1,16 @@
+Package: wowr
+Title: An interface to the Wow API
+Version: 0.0.0.9000
+Authors@R: person("Pierre", "Formont", email = "pierre.formont@gmail.com", role = c("aut", "cre"))
+Description: wowr provides functions to interact with the World of Warcraft API.
+Depends: R (>= 3.3.0)
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+Imports: 
+    data.table,
+    glue,
+    httr,
+    magrittr
+RoxygenNote: 6.1.0
