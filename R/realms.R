@@ -52,33 +52,18 @@ wow_connected_realm <- function(realm_id, ...) {
 
   content <- content(response)
 
-  # TODO: rework with infer_locale
-  multi_locale <- length(content$status$name) > 1
+  # status of the realms
+  status_locale     <- infer_locale(content$status$name)
+  population_locale <- infer_locale(content$population$name)
+  status <- data.table(
+    id = content$id,
+    locale = status_locale$locale,
+    status = status_locale$y,
+    population = population_locale$y
+  )
 
-  if (multi_locale) {
-    status <- data.table(
-      id = content$id,
-      locale = names(content$status$name),
-      status = unname(unlist(content$status$name)),
-      population = unname(unlist(content$population$name))
-    )
-  } else {
-    if (!is.null(dots$locale)) {
-      locale <- dots$locale
-    } else {
-      locale <- get_default_locale(dots$region)
-    }
-
-    status <- data.table(
-      id = content$id,
-      locale = locale,
-      status = unname(unlist(content$status$name)),
-      population = unname(unlist(content$population$name))
-    )
-  }
-
+  # realms info
   n_realms <- length(content$realms)
-
   realms <- lapply(content$realms, function(realm) {
     data.table(
       region     = unname(unlist(realm$region$name)),
@@ -91,8 +76,10 @@ wow_connected_realm <- function(realm_id, ...) {
   }) %>%
     Reduce(rbind, .)
 
+  # duplicate status information for all realms
+  duplicate <- rep(1:nrow(status), n_realms)
   cbind(
-    status[rep(1:nrow(status), n_realms),],
+    status[duplicate,],
     realms
   ) %>%
     as.data.table()

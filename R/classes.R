@@ -27,7 +27,7 @@ wow_classes <- function(...) {
 #'
 #' @export
 wow_class <- function(class_id, ...) {
-  res <- make_get_with_static_namespace(endpoint = glue("data/wow/playable-class/{class_id}"))
+  res <- make_get_with_static_namespace(endpoint = glue("data/wow/playable-class/{class_id}"), ...)
   dots    <- res$dots
   content <- res$content
 
@@ -54,6 +54,9 @@ wow_class <- function(class_id, ...) {
 
 }
 
+#' @method print wow_class
+#' @keywords internal
+#' @export
 print.wow_class <- function(x, ...) {
 
   desc <- x$description

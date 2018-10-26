@@ -5,7 +5,7 @@
 #' @export
 wow_specializations <- function(...) {
 
-  res <- make_get_with_static_namespace(endpoint = "data/wow/playable-specialization/")
+  res <- make_get_with_static_namespace(endpoint = "data/wow/playable-specialization/", ...)
   dots    <- res$dots
   content <- res$content
 
@@ -44,7 +44,7 @@ wow_specializations <- function(...) {
 #'
 #' @export
 wow_specialization <- function(spec_id, ...) {
-  res <- make_get_with_static_namespace(endpoint = glue("data/wow/playable-specialization/{spec_id}"))
+  res <- make_get_with_static_namespace(endpoint = glue("data/wow/playable-specialization/{spec_id}"), ...)
   dots    <- res$dots
   content <- res$content
 
