@@ -20,7 +20,8 @@ make_get <- function(endpoint, token, region, namespace = NULL, locale = NULL) {
   args <- add_namespace(args, namespace)
 
   response <- do.call(what = GET, args = args)
-  response
+
+  stop_for_status(response)
 }
 
 #' build a GET request without a namespace
